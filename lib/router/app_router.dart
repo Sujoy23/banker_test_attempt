@@ -1,5 +1,6 @@
 import 'dart:js';
 
+import 'package:banker_test_attempt/main.dart';
 import 'package:banker_test_attempt/router/screen_router_constants.dart';
 import 'package:banker_test_attempt/screens/accounts.dart';
 import 'package:banker_test_attempt/screens/contact.dart';
@@ -11,13 +12,29 @@ import 'package:banker_test_attempt/screens/statements.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../screens/myappmain.dart';
+import '../screens/login.dart';
+
 class AppRouter {
-  static GoRouter returnRouter(bool isAuth) {
     GoRouter router =GoRouter(
         routes: [
           GoRoute(
+              name: ScreenRouteConstants.loginRouteName,
+              path: '/',
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: Login());
+              }
+          ),
+          GoRoute(
+              name: ScreenRouteConstants.myAppRouteName,
+              path: '/myappmain',
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: MyAppMain());
+              }
+          ),
+          GoRoute(
             name: ScreenRouteConstants.homeRouteName,
-            path: '/',
+            path: '/home',
             pageBuilder: (context, state) {
               return const MaterialPage(child: Home());
             }
@@ -61,7 +78,9 @@ class AppRouter {
       errorPageBuilder: (context, state) {
         return MaterialPage(child: ErrorPage());
       },
+        initialLocation: "/", routerNeglect: true, debugLogDiagnostics: true,
+      redirect: (context, state) {
+          return null;
+      },
     );
-    return router;
-  }
 }
