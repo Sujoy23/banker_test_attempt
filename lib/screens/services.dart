@@ -29,6 +29,13 @@ class Services extends StatelessWidget {
               },
               child: Text('Statements'),
             ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                navigateToContacts(context);
+              },
+              child: Text('Contacts'),
+            ),
           ],
         ),
       ),
@@ -45,5 +52,9 @@ class Services extends StatelessWidget {
 
   void navigateToStatements(BuildContext context) {
     GoRouter.of(context).pushNamed(ScreenRouteConstants.statementsRouteName);
+  }
+
+  void navigateToContacts(BuildContext context) {
+    GoRouter.of(context).pushNamed(ScreenRouteConstants.contactUsRouteName);
   }
 }
