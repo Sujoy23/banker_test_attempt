@@ -55,7 +55,7 @@ class AccountsScreenContent extends StatelessWidget {
                         title: Text(accountsList[index].accountNumber ?? ''),
                         subtitle: Text(accountsList[index].accountType ?? ''),
                         onTap: () {
-                          // Navigate to Transactions screen when an account is tapped
+                          // Using Navigator here to push account details easily.
                           Navigator.push(
                             context,
                             MaterialPageRoute(

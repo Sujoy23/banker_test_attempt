@@ -18,7 +18,6 @@ class Services extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                // Handle Loans button press
                 showLoansSnackBar(context);
               },
               child: Text('Loans'),
@@ -26,7 +25,6 @@ class Services extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Handle Statements button press
                 navigateToStatements(context);
               },
               child: Text('Statements'),
@@ -46,10 +44,6 @@ class Services extends StatelessWidget {
   }
 
   void navigateToStatements(BuildContext context) {
-    // Use GoRouter to navigate to the StatementsScreen
-    // routeInformationProvider: AppRouter().,
-    // routeInformationParser: AppRouter.router.routeInformationParser,
-    // routerDelegate: AppRouter.router.routerDelegate,
     GoRouter.of(context).pushNamed(ScreenRouteConstants.statementsRouteName);
   }
 }

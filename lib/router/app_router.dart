@@ -5,6 +5,7 @@ import 'package:banker_test_attempt/screens/contact.dart';
 import 'package:banker_test_attempt/screens/error_page.dart';
 import 'package:banker_test_attempt/screens/home.dart';
 import 'package:banker_test_attempt/screens/loans.dart';
+import 'package:banker_test_attempt/screens/pdfViewer.dart';
 import 'package:banker_test_attempt/screens/services.dart';
 import 'package:banker_test_attempt/screens/statements.dart';
 import 'package:flutter/material.dart';
@@ -70,15 +71,14 @@ class AppRouter {
               name: ScreenRouteConstants.statementsRouteName,
               path: '/statements',
               pageBuilder: (context, state) {
-                return const MaterialPage(child: Statements());
+                return MaterialPage(child: Statements());
               }
           ),
           GoRoute(
-              name: ScreenRouteConstants.transactionsScreenRouteName,
-              path: '/transactions_screen',
+              name: ScreenRouteConstants.pdfViewerScreenRouteName,
+              path: '/pdfViewer',
               pageBuilder: (context, state) {
-                final AccountsDetails accountsDetails = state.pathParameters['accountsDetails'] as AccountsDetails;
-                return const MaterialPage(child: TransactionsScreen(accountsDetails: accountsDetails));
+                return MaterialPage(child: PdfViewer());
               }
           ),
         ],
