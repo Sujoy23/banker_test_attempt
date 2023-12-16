@@ -13,14 +13,11 @@ class TransactionBloc extends Cubit<TransactionState> {
     emit(TransactionLoading());
 
     try {
-      // Perform your GraphQL query here
       final result = await client.query(QueryOptions(
-        document: gql(QueryConstants.transactionQuery), // Replace with your GraphQL query
-      ));
+        document: gql(QueryConstants.transactionQuery),
+      )).timeout(const Duration(seconds: 10));
 
-      // Handle the result and update state accordingly
       if (result.hasException) {
-        // print(result.exception);
         emit(TransactionError(
           result.exception!.graphqlErrors.isNotEmpty
               ? result.exception!.graphqlErrors.first.message
@@ -28,9 +25,6 @@ class TransactionBloc extends Cubit<TransactionState> {
         ));
       } else {
         final data = result.data;
-        // final Map<String, dynamic> rawJson = result.source as Map<String, dynamic>;
-        // print(result.data?['home']['name']);
-        // print(jsonEncode(result.toString()));
         emit(TransactionLoaded(data));
       }
     } catch (e) {

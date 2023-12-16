@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../router/app_router.dart';
+import '../router/screen_router_constants.dart';
+
 class Services extends StatelessWidget {
   const Services({super.key});
   @override
@@ -44,6 +47,9 @@ class Services extends StatelessWidget {
 
   void navigateToStatements(BuildContext context) {
     // Use GoRouter to navigate to the StatementsScreen
-    GoRouter.of(context).pushNamed('/statements');
+    // routeInformationProvider: AppRouter().,
+    // routeInformationParser: AppRouter.router.routeInformationParser,
+    // routerDelegate: AppRouter.router.routerDelegate,
+    GoRouter.of(context).pushNamed(ScreenRouteConstants.statementsRouteName);
   }
 }
