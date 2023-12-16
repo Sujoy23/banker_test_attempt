@@ -1,36 +1,30 @@
-import 'package:banker_test_attempt/graphql_api/query_constants.dart';
-import 'package:bloc/bloc.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:equatable/equatable.dart';
 
-import 'contact_bloc.dart';
+abstract class ContactState extends Equatable {
+  const ContactState();
 
-class ContactBloc extends Cubit<ContactState> {
-  final GraphQLClient client;
+  @override
+  List<Object> get props => [];
+}
 
-  ContactBloc({required this.client}) : super(ContactInitial());
+class ContactInitial extends ContactState {}
 
-  Future<void> fetchData() async {
-    emit(ContactLoading());
+class ContactLoading extends ContactState {}
 
-    try {
-      final result = await client.query(QueryOptions(
-        document: gql(QueryConstants.contactQuery),
-      )).timeout(const Duration(seconds: 10));
+class ContactLoaded extends ContactState {
+  final dynamic data;
 
-      if (result.hasException) {
-        // print("Error : ${result.exception!.graphqlErrors.first.message}");
-        emit(ContactError(
-          result.exception!.graphqlErrors.isNotEmpty
-              ? result.exception!.graphqlErrors.first.message
-              : 'Unknown error occurred',
-        ));
-      } else {
-        final data = result.data;
-        emit(ContactLoaded(data));
-      }
-    } catch (e) {
-      print(e);
-      emit(ContactError('Failed to fetch data'));
-    }
-  }
+  ContactLoaded(this.data);
+
+  @override
+  List<Object> get props => [data];
+}
+
+class ContactError extends ContactState {
+  final String message;
+
+  ContactError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../graphql_api/graphql_service.dart';
-import '../bloc/home_bloc.dart';
 import '../bloc/home_state.dart';
+import '../bloc/home_bloc.dart';
 import 'dart:convert';
 
 class Home extends StatelessWidget {

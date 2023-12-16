@@ -1,30 +1,41 @@
-import 'package:equatable/equatable.dart';
+import 'package:banker_test_attempt/graphql_api/query_constants.dart';
+import 'package:bloc/bloc.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
-abstract class AccountState extends Equatable {
-  const AccountState();
+import 'account_state.dart';
 
-  @override
-  List<Object> get props => [];
-}
+class AccountBloc extends Cubit<AccountState> {
+  final GraphQLClient client;
 
-class AccountInitial extends AccountState {}
+  AccountBloc({required this.client}) : super(AccountInitial());
 
-class AccountLoading extends AccountState {}
+  Future<void> fetchData() async {
+    print('Emitting..1');
+    emit(AccountLoading());
+    print('Emitted..1');
 
-class AccountLoaded extends AccountState {
-  final dynamic data;
+    try {
+      final result = await client.query(QueryOptions(
+        document: gql(QueryConstants.accountQuery),
+      )).timeout(const Duration(seconds: 10));
 
-  AccountLoaded(this.data);
-
-  @override
-  List<Object> get props => [data];
-}
-
-class AccountError extends AccountState {
-  final String message;
-
-  AccountError(this.message);
-
-  @override
-  List<Object> get props => [message];
+      if (result.hasException) {
+        print('Emitting..2');
+        emit(AccountError(
+          result.exception!.graphqlErrors.isNotEmpty
+              ? result.exception!.graphqlErrors.first.message
+              : 'Unknown error occurred',
+        ));
+      } else {
+        print('Emitting..3');
+        final data = result.data;
+        emit(AccountLoaded(data));
+      }
+    } catch (e) {
+      print(e);
+      print('Emitting..4');
+      emit(AccountLoaded('null'));
+      // emit(AccountError('Failed to fetch data'));
+    }
+  }
 }

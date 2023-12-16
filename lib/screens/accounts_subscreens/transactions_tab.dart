@@ -3,8 +3,8 @@ import 'package:banker_test_attempt/models/transaction_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/transaction_bloc.dart';
 import '../../bloc/transaction_state.dart';
+import '../../bloc/transaction_bloc.dart';
 import '../../models/account_response.dart';
 import '../accounts.dart';
 

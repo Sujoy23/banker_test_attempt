@@ -1,30 +1,38 @@
-import 'package:equatable/equatable.dart';
+// blocs/home_state.dart
+import 'dart:convert';
 
-abstract class HomeState extends Equatable {
-  const HomeState();
+import 'package:banker_test_attempt/graphql_api/query_constants.dart';
+import 'package:bloc/bloc.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
-  @override
-  List<Object> get props => [];
-}
+import 'home_state.dart';
 
-class HomeInitial extends HomeState {}
+class HomeBloc extends Cubit<HomeState> {
+  final GraphQLClient client;
 
-class HomeLoading extends HomeState {}
+  HomeBloc({required this.client}) : super(HomeInitial());
 
-class HomeLoaded extends HomeState {
-  final dynamic data;
+  Future<void> fetchData() async {
+    emit(HomeLoading());
 
-  HomeLoaded(this.data);
+    try {
+      final result = await client.query(QueryOptions(
+        document: gql(QueryConstants.homeQuery),
+      )).timeout(const Duration(seconds: 10));
 
-  @override
-  List<Object> get props => [data];
-}
-
-class HomeError extends HomeState {
-  final String message;
-
-  HomeError(this.message);
-
-  @override
-  List<Object> get props => [message];
+      if (result.hasException) {
+        emit(HomeError(
+          result.exception!.graphqlErrors.isNotEmpty
+              ? result.exception!.graphqlErrors.first.message
+              : 'Unknown error occurred',
+        ));
+      } else {
+        final data = result.data;
+        emit(HomeLoaded(data));
+      }
+    } catch (e) {
+      print(e);
+      emit(HomeError('Failed to fetch data'));
+    }
+  }
 }

@@ -1,35 +1,30 @@
-import 'package:banker_test_attempt/graphql_api/query_constants.dart';
-import 'package:bloc/bloc.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:equatable/equatable.dart';
 
-import 'transaction_bloc.dart';
+abstract class TransactionState extends Equatable {
+  const TransactionState();
 
-class TransactionBloc extends Cubit<TransactionState> {
-  final GraphQLClient client;
+  @override
+  List<Object> get props => [];
+}
 
-  TransactionBloc({required this.client}) : super(TransactionInitial());
+class TransactionInitial extends TransactionState {}
 
-  Future<void> fetchData() async {
-    emit(TransactionLoading());
+class TransactionLoading extends TransactionState {}
 
-    try {
-      final result = await client.query(QueryOptions(
-        document: gql(QueryConstants.transactionQuery),
-      )).timeout(const Duration(seconds: 10));
+class TransactionLoaded extends TransactionState {
+  final dynamic data;
 
-      if (result.hasException) {
-        emit(TransactionError(
-          result.exception!.graphqlErrors.isNotEmpty
-              ? result.exception!.graphqlErrors.first.message
-              : 'Unknown error occurred',
-        ));
-      } else {
-        final data = result.data;
-        emit(TransactionLoaded(data));
-      }
-    } catch (e) {
-      print(e);
-      emit(TransactionError('Failed to fetch data'));
-    }
-  }
+  TransactionLoaded(this.data);
+
+  @override
+  List<Object> get props => [data];
+}
+
+class TransactionError extends TransactionState {
+  final String message;
+
+  TransactionError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

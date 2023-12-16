@@ -1,9 +1,9 @@
-import 'package:banker_test_attempt/bloc/statement_state.dart';
+import 'package:banker_test_attempt/bloc/statement_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../bloc/statement_bloc.dart';
+import '../bloc/statement_state.dart';
 import '../graphql_api/graphql_service.dart';
 import '../models/statement_response.dart';
 import '../router/screen_router_constants.dart';

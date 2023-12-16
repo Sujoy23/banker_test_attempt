@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/contact_bloc.dart';
 import '../bloc/contact_state.dart';
+import '../bloc/contact_bloc.dart';
 import '../graphql_api/graphql_service.dart';
 
 class Contact extends StatelessWidget {

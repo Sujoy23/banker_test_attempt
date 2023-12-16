@@ -1,38 +1,30 @@
-// blocs/home_bloc.dart
-import 'dart:convert';
+import 'package:equatable/equatable.dart';
 
-import 'package:banker_test_attempt/bloc/statement_bloc.dart';
-import 'package:banker_test_attempt/graphql_api/query_constants.dart';
-import 'package:bloc/bloc.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+abstract class StatementState extends Equatable {
+  const StatementState();
 
+  @override
+  List<Object> get props => [];
+}
 
-class StatementBloc extends Cubit<StatementState> {
-  final GraphQLClient client;
+class StatementInitial extends StatementState {}
 
-  StatementBloc({required this.client}) : super(StatementInitial());
+class StatementLoading extends StatementState {}
 
-  Future<void> fetchData() async {
-    emit(StatementLoading());
+class StatementLoaded extends StatementState {
+  final dynamic data;
 
-    try {
-      final result = await client.query(QueryOptions(
-        document: gql(QueryConstants.statementsQuery),
-      )).timeout(const Duration(seconds: 10));
+  StatementLoaded(this.data);
 
-      if (result.hasException) {
-        emit(StatementError(
-          result.exception!.graphqlErrors.isNotEmpty
-              ? result.exception!.graphqlErrors.first.message
-              : 'Unknown error occurred',
-        ));
-      } else {
-        final data = result.data;
-        emit(StatementLoaded(data));
-      }
-    } catch (e) {
-      print(e);
-      emit(StatementError('Failed to fetch data'));
-    }
-  }
+  @override
+  List<Object> get props => [data];
+}
+
+class StatementError extends StatementState {
+  final String message;
+
+  StatementError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
