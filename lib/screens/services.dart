@@ -10,30 +10,46 @@ class Services extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                showLoansSnackBar(context);
-              },
-              child: Text('Loans'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                navigateToStatements(context);
-              },
-              child: Text('Statements'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                navigateToContacts(context);
-              },
-              child: Text('Contacts'),
-            ),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+                ElevatedButton(
+                  onPressed: () {
+                    showLoansSnackBar(context);
+                  },
+                  style: ElevatedButton.styleFrom( // Set the button color
+                    fixedSize: Size.fromWidth(200.0), // Set the width of the button
+                    padding: EdgeInsets.symmetric(vertical: 16.0), // Adjust vertical padding
+                  ),
+                  child: Text('Loans', style: TextStyle(fontSize: 18.0, color: Colors.blue)),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    navigateToStatements(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size.fromWidth(200.0),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                  ),
+                  child: Text('Statements', style: TextStyle(fontSize: 18.0, color: Colors.blue)),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    navigateToContacts(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size.fromWidth(200.0),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                  ),
+                  child: Text('Contacts', style: TextStyle(fontSize: 18.0, color: Colors.blue)),
+                ),
+              ],
+          ),
         ),
       ),
     );
@@ -41,7 +57,7 @@ class Services extends StatelessWidget {
 
   void showLoansSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('No Active Loans Found!!'),
       ),
     );

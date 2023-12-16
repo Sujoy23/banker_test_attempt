@@ -20,8 +20,14 @@ class TransactionsScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Transactions'),
-          bottom: TabBar(
+          backgroundColor: Colors.blue,
+          iconTheme: const IconThemeData(color: Colors.white),
+          title: const Text('Transactions',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          bottom: const TabBar(
             tabs: [
               Tab(text: 'Transactions'),
               Tab(text: 'Details'),

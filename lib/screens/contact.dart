@@ -32,7 +32,13 @@ class __ContactScreenState extends State<_ContactScreenState> {
     context.read<ContactBloc>().fetchData();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Statements'),
+        backgroundColor: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Contacts',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -46,7 +52,7 @@ class __ContactScreenState extends State<_ContactScreenState> {
                   final data = state.data;// Use the filtered statements
                   // final error  = state.errors;
                   if (data['contacts'] == null) {
-                    return Center(child: Text("No Data",
+                    return const Center(child: Text("No Data",
                       textAlign: TextAlign.center,
                     ),);
                   } else {
@@ -63,7 +69,7 @@ class __ContactScreenState extends State<_ContactScreenState> {
                 } else if (state is ContactError) {
                   return Center(child: Text('Error: ${state.message}'));
                 } else {
-                  return Center(child: Text('Initial State'));
+                  return const Center(child: Text('Initial State'));
                 }
               },
             ),

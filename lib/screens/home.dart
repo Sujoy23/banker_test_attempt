@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../graphql_api/graphql_service.dart';
 import '../bloc/home_state.dart';
 import '../bloc/home_bloc.dart';
-import 'dart:convert';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -29,7 +28,6 @@ class HomeScreenContent extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is HomeLoaded) {
             final data = state.data;
-            // return Center(child: Text('Data: ${state.data['home']['recentTransactions'][0]['amount']}'));
             int transCount = data['home']['recentTransactions']?.length ?? 0;
             final List<RecentTransactions> transactionList = [];
             for (int i=0; i<transCount; i++) {
@@ -59,16 +57,71 @@ class HomeScreenContent extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Name: ${data['home']['name'] ?? ""}'),
-                  Text('Account Number: ${data['home']['accountNumber'] ?? ""}'),
-                  Text('Balance: ${data['home']['balance'] ?? ""} ${data['home']['currency'] ?? ""}'),
-                  Text('Address: ${data['home']['address']['streetName'] ?? ""}, ${data['home']['address']['townName'] ?? ""}, ${data['home']['address']['country'] ?? ""}'),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                       vertical: 14.0,
+                      horizontal: 8.0,
+                    ),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(15.0),
+
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(
+                          Icons.account_circle,
+                          color: Colors.white,
+                          size: 48.0, // Adjust the size as needed
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                              Text('Name: ${data['home']['name'] ?? ""}',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              Text('Account Number: ${data['home']['accountNumber'] ?? ""}',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              Text('Balance: ${data['home']['balance'] ?? ""} ${data['home']['currency'] ?? ""}',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              Text('Address: ${data['home']['address']['streetName'] ?? ""}, ${data['home']['address']['townName'] ?? ""}, ${data['home']['address']['country'] ?? ""}',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            // Add more Text items as needed
+                          ],
+                        ),
+                      ],
+                    ),
+                    // child: Column(
+                    //   children: [
+                    //     Text('Name: ${data['home']['name'] ?? ""}'),
+                    //     Text('Account Number: ${data['home']['accountNumber'] ?? ""}'),
+                    //     Text('Balance: ${data['home']['balance'] ?? ""} ${data['home']['currency'] ?? ""}'),
+                    //     Text('Address: ${data['home']['address']['streetName'] ?? ""}, ${data['home']['address']['townName'] ?? ""}, ${data['home']['address']['country'] ?? ""}'),
+                    //   ],
+                    // ),
+                  ),
+                  // Text('Name: ${data['home']['name'] ?? ""}'),
+                  // Text('Account Number: ${data['home']['accountNumber'] ?? ""}'),
+                  // Text('Balance: ${data['home']['balance'] ?? ""} ${data['home']['currency'] ?? ""}'),
+                  // Text('Address: ${data['home']['address']['streetName'] ?? ""}, ${data['home']['address']['townName'] ?? ""}, ${data['home']['address']['country'] ?? ""}'),
                   SizedBox(height: 16),
                   Text('Recent Transactions:'),
-                  _buildTransactionList(transCount, transactionList),
+                  Container(
+                    height: 260,
+                    child: _buildTransactionList(transCount, transactionList),
+                  ),
                   SizedBox(height: 16),
                   Text('Upcoming Bills:'),
-                  _buildUpcomingTransactionList(billCount, upcomingBillsList),
+                  Container(
+                    height: 260,
+                    child: _buildUpcomingTransactionList(billCount, upcomingBillsList),
+                  ),
+
                 ],
               ),
             );
@@ -79,13 +132,12 @@ class HomeScreenContent extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Trigger the fetch data action
-          context.read<HomeBloc>().fetchData();
-        },
-        child: Icon(Icons.refresh),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     context.read<HomeBloc>().fetchData();
+      //   },
+      //   child: Icon(Icons.refresh),
+      // ),
     );
   }
 
@@ -96,7 +148,7 @@ class HomeScreenContent extends StatelessWidget {
 
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: ClampingScrollPhysics(),
       itemCount: transactions.length,
       itemBuilder: (context, index) {
         final transaction = transactions[index];

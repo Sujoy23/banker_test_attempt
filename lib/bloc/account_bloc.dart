@@ -35,7 +35,6 @@ class AccountBloc extends Cubit<AccountState> {
       print(e);
       print('Emitting..4');
       emit(AccountLoaded('null'));
-      // emit(AccountError('Failed to fetch data'));
     }
   }
 }

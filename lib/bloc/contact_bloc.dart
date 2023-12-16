@@ -18,7 +18,6 @@ class ContactBloc extends Cubit<ContactState> {
       )).timeout(const Duration(seconds: 10));
 
       if (result.hasException) {
-        // print("Error : ${result.exception!.graphqlErrors.first.message}");
         emit(ContactError(
           result.exception!.graphqlErrors.isNotEmpty
               ? result.exception!.graphqlErrors.first.message

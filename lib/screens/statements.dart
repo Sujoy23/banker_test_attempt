@@ -34,7 +34,13 @@ class __StatementsScreenState extends State<_StatementsScreenState> {
     List<UserStatements> statements = [];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Statements'),
+        backgroundColor: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Statements',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -44,13 +50,26 @@ class __StatementsScreenState extends State<_StatementsScreenState> {
             onChanged: (int? value) {
               setState(() {
                 selectedYear = value!;
-                // Handle statement filtering based on the selected year
               });
             },
+            icon: const Icon(
+              Icons.arrow_drop_down,  // Change the icon to your preferred icon
+              color: Colors.blue,  // Set the icon color
+            ),
             items: [2023, 2022, 2021, 2020, 2019].map((int year) {
               return DropdownMenuItem<int>(
                 value: year,
-                child: Text(year.toString()),
+                child: Row(
+                  children: [
+                    SizedBox(width: 8),  // Adjust spacing between icon and text
+                    Text(
+                      year.toString(),
+                      style: TextStyle(
+                        color: Colors.blue,  // Set the text color
+                      ),
+                    ),
+                  ],
+                ),
               );
             }).toList(),
           ),
@@ -58,7 +77,7 @@ class __StatementsScreenState extends State<_StatementsScreenState> {
             child: BlocBuilder<StatementBloc, StatementState>(
               builder: (context, state) {
                 if (state is StatementLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (state is StatementLoaded) {
                   final data = state.data;
                   int statementSize = data['statements']?.length ?? 0;
@@ -77,7 +96,7 @@ class __StatementsScreenState extends State<_StatementsScreenState> {
                   } // Use the filtered statements
 
                   if (statements.isEmpty) {
-                    return Center(child: Text("No Statement for the selected year",
+                    return const Center(child: Text("No Statement for the selected year",
                       textAlign: TextAlign.center,
                     ),);
                   } else {
@@ -99,7 +118,7 @@ class __StatementsScreenState extends State<_StatementsScreenState> {
                 } else if (state is StatementError) {
                   return Center(child: Text('Error: ${state.message}'));
                 } else {
-                  return Center(child: Text('Initial State'));
+                  return const Center(child: Text('Initial State'));
                 }
               },
             ),

@@ -35,7 +35,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Banking Demo'),
+        backgroundColor: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Banking Demo',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
       ),
       body: _screens[_currentIndex],
@@ -46,17 +52,23 @@ class _MyHomePageState extends State<MyHomePage> {
             _currentIndex = index;
           });
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home,
+              color: _currentIndex == 0 ? Colors.indigo : Colors.blue,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_balance),
+            icon: Icon(Icons.account_balance,
+              color: _currentIndex == 1 ? Colors.indigo : Colors.blue,
+            ),
             label: 'Accounts',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.business,
+              color: _currentIndex == 2 ? Colors.indigo : Colors.blue,
+            ),
             label: 'Services',
           ),
         ],

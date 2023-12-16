@@ -49,7 +49,6 @@ class AccountsScreenContent extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (state is AccountLoaded) {
               final data = state.data;
-              // return Center(child: Text('Data: ${state.data['home']['recentTransactions'][0]['amount']}'));
               insertAccountsDetails(data);
               return  ListView.builder(
                   itemCount: accountsList.length,
@@ -76,7 +75,7 @@ class AccountsScreenContent extends StatelessWidget {
             } else if (state is AccountError) {
               return Center(child: Text('Error: ${state.message}'));
             } else {
-              return Center(child: Text('Initial State'));
+              return const Center(child: Text('Initial State'));
             }
           },
         )

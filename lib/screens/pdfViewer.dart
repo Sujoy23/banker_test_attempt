@@ -10,7 +10,11 @@ class _MyPdfViewerState extends State<PdfViewer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hire This Guy ;p"),
+        title: const Text("Hire This Guy ;p",
+          style: TextStyle(
+            color: Colors.blue,
+          ),
+        ),
       ),
       body: SfPdfViewer.asset(
         'assets/resume.pdf'
