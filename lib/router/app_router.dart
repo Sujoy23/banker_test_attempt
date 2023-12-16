@@ -1,8 +1,6 @@
-import 'dart:js';
-
-import 'package:banker_test_attempt/main.dart';
 import 'package:banker_test_attempt/router/screen_router_constants.dart';
 import 'package:banker_test_attempt/screens/accounts.dart';
+import 'package:banker_test_attempt/screens/accounts_subscreens/transactions_screen.dart';
 import 'package:banker_test_attempt/screens/contact.dart';
 import 'package:banker_test_attempt/screens/error_page.dart';
 import 'package:banker_test_attempt/screens/home.dart';
@@ -12,6 +10,7 @@ import 'package:banker_test_attempt/screens/statements.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../models/account_response.dart';
 import '../screens/myappmain.dart';
 import '../screens/login.dart';
 
@@ -74,11 +73,19 @@ class AppRouter {
                 return const MaterialPage(child: Statements());
               }
           ),
+          GoRoute(
+              name: ScreenRouteConstants.transactionsScreenRouteName,
+              path: '/transactions_screen',
+              pageBuilder: (context, state) {
+                final AccountsDetails accountsDetails = state.pathParameters['accountsDetails'] as AccountsDetails;
+                return const MaterialPage(child: TransactionsScreen(accountsDetails: accountsDetails));
+              }
+          ),
         ],
       errorPageBuilder: (context, state) {
         return MaterialPage(child: ErrorPage());
       },
-        initialLocation: "/", routerNeglect: true, debugLogDiagnostics: true,
+      routerNeglect: true, debugLogDiagnostics: true,
       redirect: (context, state) {
           return null;
       },

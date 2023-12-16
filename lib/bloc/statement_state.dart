@@ -1,38 +1,38 @@
 // blocs/home_bloc.dart
 import 'dart:convert';
 
+import 'package:banker_test_attempt/bloc/statement_bloc.dart';
 import 'package:banker_test_attempt/graphql_api/query_constants.dart';
 import 'package:bloc/bloc.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import 'home_bloc.dart';
 
-class HomeBloc extends Cubit<HomeState> {
+class StatementBloc extends Cubit<StatementState> {
   final GraphQLClient client;
 
-  HomeBloc({required this.client}) : super(HomeInitial());
+  StatementBloc({required this.client}) : super(StatementInitial());
 
   Future<void> fetchData() async {
-    emit(HomeLoading());
+    emit(StatementLoading());
 
     try {
       final result = await client.query(QueryOptions(
-        document: gql(QueryConstants.homeQuery),
+        document: gql(QueryConstants.statementsQuery),
       )).timeout(const Duration(seconds: 10));
 
       if (result.hasException) {
-        emit(HomeError(
+        emit(StatementError(
           result.exception!.graphqlErrors.isNotEmpty
               ? result.exception!.graphqlErrors.first.message
               : 'Unknown error occurred',
         ));
       } else {
         final data = result.data;
-        emit(HomeLoaded(data));
+        emit(StatementLoaded(data));
       }
     } catch (e) {
       print(e);
-      emit(HomeError('Failed to fetch data'));
+      emit(StatementError('Failed to fetch data'));
     }
   }
 }
