@@ -80,7 +80,7 @@ class HomeScreenContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                               Text('Name: ${data['home']['name'] ?? ""}',
-                                style: const TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white, fontSize: 20,),
                               ),
                               Text('Account Number: ${data['home']['accountNumber'] ?? ""}',
                                 style: const TextStyle(color: Colors.white),

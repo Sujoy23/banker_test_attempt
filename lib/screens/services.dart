@@ -9,13 +9,20 @@ class Services extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.all(16.0),
+      body: Container(
+        decoration: const BoxDecoration(
           color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+          image: DecorationImage(
+            image: AssetImage('assets/support_img.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 ElevatedButton(
                   onPressed: () {
                     showLoansSnackBar(context);
@@ -49,6 +56,7 @@ class Services extends StatelessWidget {
                   child: Text('Contacts', style: TextStyle(fontSize: 18.0, color: Colors.blue)),
                 ),
               ],
+            ),
           ),
         ),
       ),
